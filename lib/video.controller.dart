@@ -1,6 +1,7 @@
 import 'dart:async';
 // import 'dart:math';
 
+import 'package:auto_orientation/auto_orientation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobx/mobx.dart';
@@ -60,7 +61,7 @@ abstract class _VideoController with Store {
   }
 
   Function _fullScreenChange;
-  addFullScreenChangeListener(void Function(bool,Function) listener) {
+  addFullScreenChangeListener(void Function() listener) {
     this._fullScreenChange = listener;
   }
 
@@ -463,34 +464,34 @@ abstract class _VideoController with Store {
   }
 
   @action
-  void setFullState(bool isFullScreen_){
-    isFullScreen= isFullScreen_;
+  void setMIsFullScreen(bool isFullScreen__){
+    isFullScreen = isFullScreen__;
   }
 
   /// screen  自定义全屏page
   Future<void> onFullScreen(BuildContext context, [Widget customScreen]) async {
-    if (_fullScreenChange != null) {
-      _fullScreenChange(isFullScreen,setFullState);
-      return;
-    }
     if (isFullScreen) {
       // Exit Full Screen
       Navigator.of(context).pop();
     } else {
       // Turn on full screen
-      _setLandscape();
+      setMIsFullScreen(true);
+      AutoOrientation.landscapeLeftMode();
+      //_setLandscape();
       // Screen.keepOn(true);
       SystemChrome.setEnabledSystemUIOverlays([]);
-      //if (_fullScreenChange != null) _fullScreenChange();
+      if (_fullScreenChange != null) _fullScreenChange();
       await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => customScreen ?? _FullPageVideo(controller: this),
         ),
       );
-      _setPortrait();
+      setMIsFullScreen(false);
+      AutoOrientation.portraitUpMode();
+      //_setPortrait();
       // Screen.keepOn(false);
       SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-      //if (_fullScreenChange != null) _fullScreenChange();
+      if (_fullScreenChange != null) _fullScreenChange();
     }
   }
 
@@ -538,21 +539,21 @@ abstract class _VideoController with Store {
   }
 
   VideoState get value => VideoState(
-    dataSource: videoCtrl.dataSource,
-    dataSourceType: videoCtrl.dataSourceType,
-    size: videoCtrl.value.size,
-    autoplay: autoplay,
-    isLooping: videoCtrl.value.isLooping,
-    isPlaying: videoCtrl.value.isPlaying,
-    volume: volume,
-    initPosition: initPosition,
-    position: position,
-    duration: duration,
-    skiptime: skiptime,
-    positionText: positionText,
-    durationText: durationText,
-    sliderValue: sliderValue,
-  );
+        dataSource: videoCtrl.dataSource,
+        dataSourceType: videoCtrl.dataSourceType,
+        size: videoCtrl.value.size,
+        autoplay: autoplay,
+        isLooping: videoCtrl.value.isLooping,
+        isPlaying: videoCtrl.value.isPlaying,
+        volume: volume,
+        initPosition: initPosition,
+        position: position,
+        duration: duration,
+        skiptime: skiptime,
+        positionText: positionText,
+        durationText: durationText,
+        sliderValue: sliderValue,
+      );
 
   @override
   String toString() => value.toString();

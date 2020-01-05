@@ -453,10 +453,10 @@ mixin _$VideoController on _VideoController, Store {
   }
 
   @override
-  void setFullState(bool isFullScreen_) {
+  void setMIsFullScreen(bool isFullScreen__) {
     final _$actionInfo = _$_VideoControllerActionController.startAction();
     try {
-      return super.setFullState(isFullScreen_);
+      return super.setMIsFullScreen(isFullScreen__);
     } finally {
       _$_VideoControllerActionController.endAction(_$actionInfo);
     }
