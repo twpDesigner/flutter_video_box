@@ -464,6 +464,9 @@ abstract class _VideoController with Store {
 
   /// screen  自定义全屏page
   Future<void> onFullScreen(BuildContext context, [Widget customScreen]) async {
+    if (_fullScreenChange != null) {
+      _fullScreenChange();return;
+    }
     if (isFullScreen) {
       // Exit Full Screen
       Navigator.of(context).pop();
@@ -472,7 +475,7 @@ abstract class _VideoController with Store {
       _setLandscape();
       // Screen.keepOn(true);
       SystemChrome.setEnabledSystemUIOverlays([]);
-      if (_fullScreenChange != null) _fullScreenChange();
+      //if (_fullScreenChange != null) _fullScreenChange();
       await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => customScreen ?? _FullPageVideo(controller: this),
@@ -481,7 +484,7 @@ abstract class _VideoController with Store {
       _setPortrait();
       // Screen.keepOn(false);
       SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-      if (_fullScreenChange != null) _fullScreenChange();
+      //if (_fullScreenChange != null) _fullScreenChange();
     }
   }
 
