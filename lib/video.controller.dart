@@ -60,7 +60,7 @@ abstract class _VideoController with Store {
   }
 
   Function _fullScreenChange;
-  addFullScreenChangeListener(void Function(bool) listener) {
+  addFullScreenChangeListener(void Function(bool,Function) listener) {
     this._fullScreenChange = listener;
   }
 
@@ -463,15 +463,14 @@ abstract class _VideoController with Store {
   }
 
   @action
-  void toggleFullState(){
-    isFullScreen=!isFullScreen;
+  void setFullState(bool isFullScreen_){
+    isFullScreen= isFullScreen_;
   }
 
   /// screen  自定义全屏page
   Future<void> onFullScreen(BuildContext context, [Widget customScreen]) async {
     if (_fullScreenChange != null) {
-      _fullScreenChange(isFullScreen);
-      toggleFullState();
+      _fullScreenChange(isFullScreen,setFullState);
       return;
     }
     if (isFullScreen) {
@@ -539,21 +538,21 @@ abstract class _VideoController with Store {
   }
 
   VideoState get value => VideoState(
-        dataSource: videoCtrl.dataSource,
-        dataSourceType: videoCtrl.dataSourceType,
-        size: videoCtrl.value.size,
-        autoplay: autoplay,
-        isLooping: videoCtrl.value.isLooping,
-        isPlaying: videoCtrl.value.isPlaying,
-        volume: volume,
-        initPosition: initPosition,
-        position: position,
-        duration: duration,
-        skiptime: skiptime,
-        positionText: positionText,
-        durationText: durationText,
-        sliderValue: sliderValue,
-      );
+    dataSource: videoCtrl.dataSource,
+    dataSourceType: videoCtrl.dataSourceType,
+    size: videoCtrl.value.size,
+    autoplay: autoplay,
+    isLooping: videoCtrl.value.isLooping,
+    isPlaying: videoCtrl.value.isPlaying,
+    volume: volume,
+    initPosition: initPosition,
+    position: position,
+    duration: duration,
+    skiptime: skiptime,
+    positionText: positionText,
+    durationText: durationText,
+    sliderValue: sliderValue,
+  );
 
   @override
   String toString() => value.toString();
