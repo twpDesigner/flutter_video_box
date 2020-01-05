@@ -462,11 +462,16 @@ abstract class _VideoController with Store {
     ]);
   }
 
+  @action
+  void toggleFullState(){
+    isFullScreen=!isFullScreen;
+  }
+
   /// screen  自定义全屏page
   Future<void> onFullScreen(BuildContext context, [Widget customScreen]) async {
     if (_fullScreenChange != null) {
       _fullScreenChange();
-      isFullScreen=!isFullScreen;
+      toggleFullState();
       return;
     }
     if (isFullScreen) {

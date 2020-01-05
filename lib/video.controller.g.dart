@@ -451,4 +451,14 @@ mixin _$VideoController on _VideoController, Store {
       _$_VideoControllerActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  void toggleFullState() {
+    final _$actionInfo = _$_VideoControllerActionController.startAction();
+    try {
+      return super.toggleFullState();
+    } finally {
+      _$_VideoControllerActionController.endAction(_$actionInfo);
+    }
+  }
 }
