@@ -60,7 +60,7 @@ abstract class _VideoController with Store {
   }
 
   Function _fullScreenChange;
-  addFullScreenChangeListener(void Function() listener) {
+  addFullScreenChangeListener(void Function(bool) listener) {
     this._fullScreenChange = listener;
   }
 
@@ -470,7 +470,7 @@ abstract class _VideoController with Store {
   /// screen  自定义全屏page
   Future<void> onFullScreen(BuildContext context, [Widget customScreen]) async {
     if (_fullScreenChange != null) {
-      _fullScreenChange();
+      _fullScreenChange(isFullScreen);
       toggleFullState();
       return;
     }
