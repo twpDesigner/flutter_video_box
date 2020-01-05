@@ -465,7 +465,9 @@ abstract class _VideoController with Store {
   /// screen  自定义全屏page
   Future<void> onFullScreen(BuildContext context, [Widget customScreen]) async {
     if (_fullScreenChange != null) {
-      _fullScreenChange();return;
+      _fullScreenChange();
+      isFullScreen=!isFullScreen;
+      return;
     }
     if (isFullScreen) {
       // Exit Full Screen
