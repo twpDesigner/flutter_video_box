@@ -539,21 +539,21 @@ abstract class _VideoController with Store {
   }
 
   VideoState get value => VideoState(
-        dataSource: videoCtrl.dataSource,
-        dataSourceType: videoCtrl.dataSourceType,
-        size: videoCtrl.value.size,
-        autoplay: autoplay,
-        isLooping: videoCtrl.value.isLooping,
-        isPlaying: videoCtrl.value.isPlaying,
-        volume: volume,
-        initPosition: initPosition,
-        position: position,
-        duration: duration,
-        skiptime: skiptime,
-        positionText: positionText,
-        durationText: durationText,
-        sliderValue: sliderValue,
-      );
+    dataSource: videoCtrl.dataSource,
+    dataSourceType: videoCtrl.dataSourceType,
+    size: videoCtrl.value.size,
+    autoplay: autoplay,
+    isLooping: videoCtrl.value.isLooping,
+    isPlaying: videoCtrl.value.isPlaying,
+    volume: volume,
+    initPosition: initPosition,
+    position: position,
+    duration: duration,
+    skiptime: skiptime,
+    positionText: positionText,
+    durationText: durationText,
+    sliderValue: sliderValue,
+  );
 
   @override
   String toString() => value.toString();
@@ -634,13 +634,32 @@ class VideoState {
   }
 }
 
-class _FullPageVideo extends StatelessWidget {
+class _FullPageVideo extends StatefulWidget {
   final VideoController controller;
 
   const _FullPageVideo({Key key, this.controller}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState()=>_FullPageVideoState();
+}
+class _FullPageVideoState extends State<_FullPageVideo>{
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: VideoBox(controller: controller)));
+    return Scaffold(body: Center(child: VideoBox(controller: widget.controller)));
   }
+
+  @override
+  void deactivate() {
+    widget.controller.pause();
+    super.deactivate();
+  }
+
+//  @override
+//  void dispose() {
+//    widget.controller.dispose();
+//    super.dispose();
+//  }
+
 
 }
