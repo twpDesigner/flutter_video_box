@@ -634,32 +634,13 @@ class VideoState {
   }
 }
 
-class _FullPageVideo extends StatefulWidget {
+class _FullPageVideo extends StatelessWidget {
   final VideoController controller;
 
   const _FullPageVideo({Key key, this.controller}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState()=>_FullPageVideoState();
-}
-class _FullPageVideoState extends State<_FullPageVideo>{
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: VideoBox(controller: widget.controller)));
+    return Scaffold(body: Center(child: VideoBox(controller: controller)));
   }
-
-  @override
-  void deactivate() {
-    widget.controller.pause();
-    super.deactivate();
-  }
-
-  @override
-  void dispose() {
-    widget.controller.dispose();
-    super.dispose();
-  }
-
 
 }
