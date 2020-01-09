@@ -31,7 +31,10 @@ class VideoBottomCtroller extends StatelessWidget {
           Observer(
             builder: (_) => IconButton(
               icon: Icon(controller.fullScreenIcon),
-              onPressed: () => controller.onFullScreen(context),
+              onPressed: (){
+                controller.pause();
+                controller.onFullScreen(context);
+              }
             ),
           ),
         ],
