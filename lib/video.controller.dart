@@ -476,10 +476,10 @@ abstract class _VideoController with Store {
     } else {
       // Turn on full screen
       setMIsFullScreen(true);
-      AutoOrientation.landscapeLeftMode();
-      //_setLandscape();
-      // Screen.keepOn(true);
-      SystemChrome.setEnabledSystemUIOverlays([]);
+//      AutoOrientation.landscapeLeftMode();
+//      //_setLandscape();
+//      // Screen.keepOn(true);
+//      SystemChrome.setEnabledSystemUIOverlays([]);
       if (_fullScreenChange != null) _fullScreenChange();
       await Navigator.of(context).push(
         MaterialPageRoute(
@@ -487,10 +487,10 @@ abstract class _VideoController with Store {
         ),
       );
       setMIsFullScreen(false);
-      AutoOrientation.portraitUpMode();
-      //_setPortrait();
-      // Screen.keepOn(false);
-      SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+//      AutoOrientation.portraitUpMode();
+//      //_setPortrait();
+//      // Screen.keepOn(false);
+//      SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
       if (_fullScreenChange != null) _fullScreenChange();
     }
   }
@@ -634,13 +634,40 @@ class VideoState {
   }
 }
 
-class _FullPageVideo extends StatelessWidget {
+class _FullPageVideo extends StatefulWidget {
   final VideoController controller;
 
   const _FullPageVideo({Key key, this.controller}) : super(key: key);
 
   @override
+  State<StatefulWidget> createState()=>_FullPageVideoState();
+}
+class _FullPageVideoState extends State<_FullPageVideo>{
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: VideoBox(controller: controller)));
+    return Scaffold(body: Center(child: VideoBox(controller: widget.controller)));
   }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    AutoOrientation.landscapeLeftMode();
+    SystemChrome.setEnabledSystemUIOverlays([]);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    AutoOrientation.portraitUpMode();
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+  }
+
+
 }
