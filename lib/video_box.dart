@@ -168,7 +168,7 @@ class _VideoBoxState extends State<VideoBox>
                                       ),
                                       Positioned(
                                         left: 0,
-                                        bottom: 5,
+                                        bottom: 0,
                                         right: 0,
                                         child: VideoBottomCtroller(
                                             controller: controller),
